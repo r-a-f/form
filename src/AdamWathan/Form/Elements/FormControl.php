@@ -17,6 +17,12 @@ abstract class FormControl extends Element
     public function required($conditional = true)
     {
         $this->setBooleanAttribute('required', $conditional);
+        if($conditional) {
+            $this->setRules('required');
+        }
+//        else {
+//            $this->unsetRules('required');
+//        }
 
         return $this;
     }

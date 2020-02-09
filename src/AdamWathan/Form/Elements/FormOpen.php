@@ -9,7 +9,7 @@ class FormOpen extends Element
         'action' => '',
     ];
 
-    protected $token;
+    protected $auto_render_elements = [];
 
     protected $hiddenMethod;
 
@@ -28,9 +28,14 @@ class FormOpen extends Element
         return implode($tags);
     }
 
+    public function autoRenderElements($elements)
+    {
+        $this->auto_render_elements = $elements;
+    }
+
     protected function hasToken()
     {
-        return isset($this->token);
+        return count($this->token);
     }
 
     protected function hasHiddenMethod()
@@ -91,8 +96,9 @@ class FormOpen extends Element
         return $this;
     }
 
-    public function action($action)
+    public function action(... $action)
     {
+        $action = implode('', $action);
         $this->setAttribute('action', $action);
 
         return $this;

@@ -4,3 +4,15 @@ composer.phar
 composer.lock
 .DS_Store
 todo.md
+/.idea/$CACHE_FILE$
+/.idea/.gitignore
+/.idea/AdamWathanForm.iml
+/.idea/composerJson.xml
+/.idea/deployment.xml
+/.idea/dictionaries
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/.idea/codeStyles/

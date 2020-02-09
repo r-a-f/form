@@ -2,7 +2,7 @@
 
 namespace AdamWathan\Form\Elements;
 
-class Select extends FormControl
+class CheckboxMultiple extends FormControl
 {
     protected $options;
 
@@ -13,6 +13,8 @@ class Select extends FormControl
         parent::__construct($name);
         $this->setName($name);
         $this->setOptions($options);
+
+        $this->multiple();
     }
 
     public function select($option)
@@ -36,11 +38,7 @@ class Select extends FormControl
 
     public function render()
     {
-        return implode([
-            sprintf('<select%s>', $this->renderAttributes()),
-            $this->renderOptions(),
-            '</select>',
-        ]);
+        return $this->renderOptions();
     }
 
     protected function renderOptions()
@@ -48,35 +46,27 @@ class Select extends FormControl
         list($values, $labels) = $this->splitKeysAndValues($this->options);
 
         $tags = array_map(function ($value, $label) {
-            if (is_array($label)) {
-                return $this->renderOptGroup($value, $label);
-            }
             return $this->renderOption($value, $label);
         }, $values, $labels);
 
         return implode($tags);
     }
 
-    protected function renderOptGroup($label, $options)
-    {
-        list($values, $labels) = $this->splitKeysAndValues($options);
-
-        $options = array_map(function ($value, $label) {
-            return $this->renderOption($value, $label);
-        }, $values, $labels);
-
-        return implode([
-            sprintf('<optgroup label="%s">', $label),
-            implode($options),
-            '</optgroup>',
-        ]);
-    }
 
     protected function renderOption($value, $label)
     {
-        return vsprintf('<option value="%s"%s>%s</option>', [
+        //$attrid = $this->getAttribute('id') . '___' . rand(100,99999);
+        $attrid = $this->getAttribute('id') . '___' . md5($label);
+
+        $checkbox_template = '<div class="custom-control custom-checkbox"><input name="%s" value="%s" type="checkbox" id="'.$attrid.'" class="custom-control-input" %s><label class="custom-control-label" for="'.$attrid.'">%s</label></div>';
+
+        //$checkbox_template = '<label class="form_input_group"><input type="checkbox" name="%s value="%s"%s>%s</label><br>'; // oryginal
+        //$checkbox_template = '<div class="custom-control custom-checkbox"><label class="custom-control custom-checkbox"><input name="%s" value="%s" type="checkbox" class="custom-control-input" %s><span class="custom-control-label">%s</span></label></div><br>';
+
+        return vsprintf($checkbox_template, [
+            $this->getAttribute('name'),
             $this->escape($value),
-            $this->isSelected($value) ? ' selected' : '',
+            $this->isSelected($value) ? ' checked="checked"' : '',
             $this->escape($label),
         ]);
     }
@@ -99,9 +89,7 @@ class Select extends FormControl
             return $this;
         }
 
-        if($value !== null) {
-            $this->select($value);
-        }
+        $this->select($value);
 
         return $this;
     }
@@ -114,7 +102,6 @@ class Select extends FormControl
         }
 
         $this->setName($name);
-        $this->setAttribute('multiple', 'multiple');
 
         return $this;
     }

@@ -15,7 +15,6 @@ class Checkbox extends Input
     public function __construct($name, $value = 1)
     {
         parent::__construct($name);
-
         $this->setValue($value);
     }
 
@@ -29,10 +28,20 @@ class Checkbox extends Input
         $this->oldValue = null;
     }
 
-    public function defaultToChecked()
+    /**
+     * We need to pass $do_chceck because specification on checkbox/radio populate
+     *
+     * @param bool|true $do_check
+     *
+     * @return $this
+     */
+    public function defaultToChecked($do_check = true)
     {
-        if (! isset($this->checked) && is_null($this->oldValue)) {
-            $this->check();
+        if($do_check) {
+
+            if (! isset($this->checked) && $this->oldValue === null) {
+                $this->check();
+            }
         }
 
         return $this;
@@ -40,7 +49,7 @@ class Checkbox extends Input
 
     public function defaultToUnchecked()
     {
-        if (! isset($this->checked) && is_null($this->oldValue)) {
+        if (! isset($this->checked) && $this->oldValue === null) {
             $this->uncheck();
         }
 
@@ -93,10 +102,21 @@ class Checkbox extends Input
         }
     }
 
+    public function valFinal()
+    {
+        if($this->oldValue || $this->checked) {
+            return $this->getAttribute('value');
+        }
+
+        return false;
+    }
+
     public function render()
     {
         $this->checkBinding();
 
+        //$template = '<label class="form-check-label"><input name="" class="form-check-input" type="checkbox" value="">xx</label>';
+        //return $template;
         return parent::render();
     }
 }

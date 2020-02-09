@@ -30,7 +30,7 @@ class BoundData
 
     protected function dataGet($target, $keyParts, $default)
     {
-        if (count($keyParts) == 0) {
+        if (count($keyParts) === 0) {
             return $target;
         }
 

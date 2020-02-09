@@ -2,10 +2,10 @@
 
 namespace AdamWathan\Form\Elements;
 
-class Password extends Text
+class Number extends Text
 {
     protected $attributes = [
-        'type' => 'password',
+        'type' => 'number',
     ];
 
 }

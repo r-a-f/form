@@ -62,4 +62,14 @@ class TextArea extends FormControl
     {
         return isset($this->value);
     }
+
+
+    public function valFinal()
+    {
+        if($this->hasValue()) {
+            return $this->value;
+        }
+
+        return false;
+    }
 }

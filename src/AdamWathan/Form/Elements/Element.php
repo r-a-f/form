@@ -4,11 +4,51 @@ namespace AdamWathan\Form\Elements;
 
 abstract class Element
 {
-    protected $attributes = [];
+    protected $attributes, $rules, $filters, $filter_view = [];
+
+    public function setRules($rules = [])
+    {
+        $this->rules = array_merge((array)$this->rules, (array)$rules);
+        return $this;
+    }
+
+//    public function unsetRule($rule_name)
+//    {
+//        dump($this->rules);die();
+//        unset($this->rules[$rule_name]);
+//        return $this;
+//    }
+
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    public function setFilters($filters = [])
+    {
+        $this->filters = $filters;
+        return $this;
+    }
+
+    public function setViewFilters($filters = [])
+    {
+        $this->filter_view = $filters;
+        return $this;
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    public function getViewFilters()
+    {
+        return $this->filter_view;
+    }
 
     protected function setAttribute($attribute, $value = null)
     {
-        if (is_null($value)) {
+        if ($value === null) {
             return;
         }
 
@@ -22,7 +62,17 @@ abstract class Element
 
     public function getAttribute($attribute)
     {
-        return $this->attributes[$attribute];
+        return $this->attributes[$attribute] ?? '';
+    }
+
+    public function val()
+    {
+        return $this->getAttribute('value');
+    }
+
+    public function valFinal()
+    {
+       return $this->val();
     }
 
     public function data($attribute, $value = null)
@@ -66,6 +116,7 @@ abstract class Element
 
         return $this;
     }
+
 
     public function removeClass($class)
     {
