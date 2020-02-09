@@ -167,11 +167,10 @@ class FormBuilder
         }
     }
 
-    //@todo make arguments like in Validator '(x)'
     protected function runFilter($filter_name, $val, $args = [])
     {
         if($this->filter) {
-            return (string) $this->filter->_($filter_name, $val, $args);
+            return (string) $this->filter->_($filter_name, $val, ...$args);
         }
 
         return $val;

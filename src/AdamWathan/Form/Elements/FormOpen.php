@@ -9,6 +9,7 @@ class FormOpen extends Element
         'action' => '',
     ];
 
+    private $token;
     protected $auto_render_elements = [];
 
     protected $hiddenMethod;
@@ -35,7 +36,7 @@ class FormOpen extends Element
 
     protected function hasToken()
     {
-        return count($this->token);
+        return (bool) $this->token;
     }
 
     protected function hasHiddenMethod()
