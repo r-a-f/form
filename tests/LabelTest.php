@@ -2,17 +2,17 @@
 
 use AdamWathan\Form\Elements\Label;
 
-class LabelTest extends PHPUnit_Framework_TestCase
+class LabelTest extends \PHPUnit\Framework\TestCase
 {
     public function tearDown()
     {
         Mockery::close();
     }
 
-    public function testLabelCanBeCreated()
-    {
-        $label = new Label('Email');
-    }
+    //public function testLabelCanBeCreated()
+    //{
+    //    $label = new Label('Email');
+    //}
 
     public function testRenderBasicLabel()
     {

@@ -2,7 +2,7 @@
 
 use AdamWathan\Form\Elements\Select;
 
-class SelectTest extends PHPUnit_Framework_TestCase
+class SelectTest extends \PHPUnit\Framework\TestCase
 {
     use InputContractTest;
 
