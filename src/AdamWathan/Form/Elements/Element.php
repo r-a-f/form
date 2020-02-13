@@ -156,7 +156,7 @@ abstract class Element
 
     protected function renderAttributes()
     {
-        list($attributes, $values) = $this->splitKeysAndValues($this->attributes);
+        [$attributes, $values] = $this->splitKeysAndValues($this->attributes);
 
         return implode(array_map(function ($attribute, $value) {
             return sprintf(' %s="%s"', $attribute, $this->escape($value));
@@ -169,9 +169,11 @@ abstract class Element
         $keys = [];
         $values = [];
 
-        foreach ($array as $key => $value) {
-            $keys[] = $key;
-            $values[] = $value;
+        if(is_array($array)) {
+            foreach ($array as $key => $value) {
+                $keys[]   = $key;
+                $values[] = $value;
+            }
         }
 
         return [$keys, $values];
