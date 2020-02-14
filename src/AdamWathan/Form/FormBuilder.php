@@ -26,7 +26,7 @@ class FormBuilder
     private const CLASS_ERROR           = 'is-invalid';
 
     //@todo move this to external template/setting
-    private const ERROR_FORMAT_MESSAGE  = '<span class="help-block invalid-feedback">:message</span>';
+    private const ERROR_FORMAT_MESSAGE = '<span class="help-block invalid-feedback">:message</span>';
 
     protected $oldInput;
     protected $auto_render_elements = [];
@@ -57,6 +57,7 @@ class FormBuilder
     {
         return $this->validator;
     }
+
     public function getFilter()
     {
         return $this->filter;
@@ -167,10 +168,24 @@ class FormBuilder
         }
     }
 
+    /**
+     * @param       $filter_name
+     * @param       $val
+     * @param mixed $args
+     *
+     * @return string
+     * @throws \ReflectionException
+     */
     protected function runFilter($filter_name, $val, $args = [])
     {
-        if($this->filter) {
-            return (string) $this->filter->_($filter_name, $val, ...$args);
+        if (is_object($args) AND $args instanceof \Closure) {
+            $refl_func = new \ReflectionFunction($args);
+
+            return (string)$refl_func->invokeArgs([$val]);
+        }
+
+        if ($this->filter) {
+            return (string)$this->filter->_($filter_name, $val, ...$args);
         }
 
         return $val;
